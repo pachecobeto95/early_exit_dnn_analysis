@@ -124,3 +124,21 @@ Por fim, note que o código é executado até o validation loss para de diminuir
 
 
 Qualquer dúvida, avise-me. 
+
+# Experimentos
+
+Contexto: as redes neurais com saídas antecipadas para adecidir quais amostras devem ser classificadas antecipadamente calculam uma métrica de confiança para cada amostra e verifica se esse valor de confiança é maior do que um dado limiar (threshold)
+
+Em relação aos experimentos, eu pensei em três experimetnos para fazer uma análise das redes neurais com saídas aantecipadas. 
+
+Variar o número de saídas antecipadas de 2 a 5 e rodar experimento para verrificar quantas foram classificadas antecipadamente. Nesse experimento, é necessário treeinar modelos para cada quantidade de saída antecipada, porem aceito sugestoes e diferentes threshold.  
+
+Além disso, seria legal um modelo que mostre o desempenho da rede neural para diferentes quantidade de ramos laterais e diferentes threshold
+
+Por fim, uma vez terminado esses dois expeirmentos, vamos fazer os experimentos de tempo de inferência usando toda aquela parte em flask que ja estã no repositorio. 
+
+A ideia é que o arquivo "end_node_img.py" envie imagens do conjunto de teste a borda. A borda recebe, execute o processamento até um predeterminado quantidade de ramos laterais e tente inferir na borda. Se classificar antecipadamente na boda, finaliza a medição do tempo. Caso não consiga, envie à nuvem que termine de executar a inferência e avisa a borda que terminou e termin a medição do tempo de inferência. Esse procedimento estoa nos seguintes arquivos. 
+
+* /appEdge/api/controllers.py -> recebe a imagem chama a função de processamento que está no arquivo /appEdge/api/services/edgeProcessing.py .
+
+Vamos nos comunicando.
