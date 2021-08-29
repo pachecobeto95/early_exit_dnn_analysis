@@ -8,23 +8,25 @@ import time, io
 import torchvision.transforms as transforms
 from PIL import Image
 from .utils import load_model
+from .utils import ModelLoad
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-b_model = load_model(device)
+#b_model = load_model(device)
+model = ModelLoad()
 
 
-def dnnInferenceCloud(feature, conf_list, p_tar):
+def dnnInferenceCloud(feature, conf_list, class_list, p_tar, nr_branch_edge):
 	feature = torch.Tensor(feature).to(device)
-	output, conf_list, inf_class = early_exit_dnn_inference(feature, conf_list, p_tar)
+	conf, infer_class = early_exit_dnn_inference_cloud(feature, conf_list, class_list, p_tar, nr_branch_edge)
 
 	return {"status": "ok"}
 
 
 
-def early_exit_dnn_inference(tensor, conf_list, p_tar):
+def early_exit_dnn_inference_cloud(x, conf_list, class_list, p_tar, nr_branch_edge):
 	
-	b_model.eval()
+	model.b_model.eval()
 	with torch.no_grad():
-		output, conf_list, infer_class = b_model.forwardExperiment(tensor.float(), conf_list, p_tar=p_tar)
-	return output, conf_list, infer_class
+		conf, infer_class = model.b_model.forwardCloudInference(x.float(), conf_list, class_list, p_tar, nr_branch_edge)
+	return conf, infer_class
