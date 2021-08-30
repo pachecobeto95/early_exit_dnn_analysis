@@ -1110,7 +1110,8 @@ def exp_proc_time(model, test_loader, p_tar_list, n_branches, device, save_path,
     model.temperature_branches = temperature_branches
     result_samples = experiment_proc_time(model, test_loader, p_tar, n_branches, device)
     df_result = pd.read_csv(save_path) if (os.path.exists(save_path)) else pd.DataFrame()
-    df_result = df_result.append(pd.Series(result_samples), ignore_index=True)
+    df = pd.DataFrame(np.array(list(result_samples.values())).T, columns=list(result_samples.keys()))
+    df_result = df_result.append(df)    
     df_result.to_csv(save_path)
         
 
