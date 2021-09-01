@@ -5,8 +5,8 @@ DIR_NAME = os.path.dirname(__file__)
 DEBUG = True
 
 # Edge URL Configuration 
-#HOST_EDGE = "146.164.69.144"
-HOST_EDGE = "192.168.0.20"
+HOST_EDGE = "146.164.69.144"
+#HOST_EDGE = "192.168.0.20"
 PORT_EDGE = 5001
 URL_EDGE = "http://%s:%s"%(HOST_EDGE, PORT_EDGE)
 URL_EDGE_DNN_INFERENCE = "%s/api/edge/edgeInference"%(URL_EDGE)
@@ -14,8 +14,8 @@ urlConfModelEdge = "%s/api/edge/modelConfiguration"%(URL_EDGE)
 
 
 # Cloud URL Configuration 
-#HOST_CLOUD = "146.164.69.144"
-HOST_CLOUD = "192.168.0.20"
+HOST_CLOUD = "146.164.69.144"
+#HOST_CLOUD = "192.168.0.20"
 PORT_CLOUD = 3001
 URL_CLOUD = "http://%s:%s"%(HOST_CLOUD, PORT_CLOUD)
 URL_CLOUD_DNN_INFERENCE = "%s/api/cloud/cloudInference"%(URL_CLOUD)
