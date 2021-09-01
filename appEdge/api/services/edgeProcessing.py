@@ -18,7 +18,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 #b_model = load_model(device)
 model = ModelLoad()
 
-
 def edgeInference(fileImg, p_tar, nr_branch_edge):
 
 	#This line reads the fileImg, obtaining pixel matrix.
