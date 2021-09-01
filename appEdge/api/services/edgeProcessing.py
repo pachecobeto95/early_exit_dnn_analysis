@@ -36,7 +36,7 @@ def edgeInference(fileImg, p_tar, nr_branch_edge):
 
 	inference_time = time.time() - start
 	if(response_request["status"] == "ok"):
-		saveInferenceTime(inference_time,  p_tar, nr_branch_edge, model.nr_branches_model)
+		saveInferenceTime(inference_time,  p_tar, nr_branch_edge, model.nr_branches_model, isTerminate)
 	
 	return response_request
 
@@ -73,10 +73,10 @@ def early_exit_dnn_inference_edge(tensor_img, p_tar, nr_branch_edge):
 
 	return output, conf_list, class_list, isTerminate
 
-def saveInferenceTime(inference_time,  p_tar, nr_branch_edge, nr_branches_model):
+def saveInferenceTime(inference_time,  p_tar, nr_branch_edge, nr_branches_model, isTerminate):
 	
 	result = {"inference_time": inference_time, "p_tar": p_tar, "nr_branch_edge": nr_branch_edge, 
-	"nr_branch_model": nr_branches_model}
+	"nr_branch_model": nr_branches_model, "isTerminate": int(isTerminate)}
 
 	result_path = os.path.join(config.RESULTS_INFERENCE_TIME_EDGE, "inference_time.csv")
 
