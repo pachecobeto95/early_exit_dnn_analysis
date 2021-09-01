@@ -50,6 +50,7 @@ def inferenceTimeExperiment(imgs_files_list, url_edge, p_tar_list, nr_branch_edg
 			# For a given number of branches processed in edge, this loop changes the threshold p_tar configuration.
 			for p_tar in p_tar_list:
 				sendImage(img_path, url_edge, p_tar, float(nr_branch_edge))
+
 				#sys.exit()
 
  
@@ -60,7 +61,7 @@ def main(args):
 
 	nr_branches_model = args.n_branches
 
-	imgs_files_list = list(glob(os.path.join(config.dataset_path, "*", "*")))
+	imgs_files_list = list(glob(os.path.join(config.dataset_path, "*")))
 
 	p_tar_list = [0.7, 0.8, 0.85, 0.9]
 
