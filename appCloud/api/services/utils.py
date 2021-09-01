@@ -8,6 +8,18 @@ from PIL import Image
 from .early_exit_dnn import Early_Exit_DNN
 import pandas as pd
 
+def transform_image(image_bytes):
+	imagenet_mean = [0.457342265910642, 0.4387686270106377, 0.4073427106250871]
+	imagenet_std = [0.26753769276329037, 0.2638145880487105, 0.2776826934044154]
+	my_transforms = transforms.Compose([transforms.Resize(config.input_dim),
+		#transforms.CenterCrop(config.input_shape),
+		transforms.ToTensor(),
+		transforms.Normalize(imagenet_mean, imagenet_std)])
+
+	image = Image.open(io.BytesIO(image_bytes))
+	return my_transforms(image).unsqueeze(0)
+
+
 def load_model(device):
 
 	early_exit_model = Early_Exit_DNN(config.model_name, config.n_classes, config.pretrained, config.nr_branch_model, 

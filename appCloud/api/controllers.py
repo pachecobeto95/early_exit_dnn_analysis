@@ -6,6 +6,19 @@ from .services.cloudProcessing import model
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
+@api.route("/cloud/onlyCloudProcessing", methods=["POST"])
+def onlyCloudProcessing():
+	fileImg = request.files['img']
+
+	#This functions process the DNN inference
+	result = cloudProcessing.onlyCloudProcessing(fileImg)
+
+	if (result["status"] ==  "ok"):
+		return jsonify(result), 200
+
+	else:
+		return jsonify(result), 500
+
 
 
 @api.route("/cloud/modelConfiguration", methods=["POST"])

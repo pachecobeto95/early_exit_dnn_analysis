@@ -30,11 +30,6 @@ def edge_inference():
 	result = edgeProcessing.edgeInference(fileImg, json_data["p_tar"], json_data["nr_branch_edge"])
 
 
-	return jsonify({"status": "ok"}), 200
-
-	#This functions process the DNN inference
-	result = edgeProcessing.edgeInference(fileImg, p_tar)
-
 	if (result["status"] ==  "ok"):
 		return jsonify(result), 200
 

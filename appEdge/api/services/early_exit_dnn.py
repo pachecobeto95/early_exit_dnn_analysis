@@ -1,4 +1,4 @@
-import torch
+import torch, config
 import torch.nn as nn
 #from utils import ExitBlock
 from pthflops import count_ops
@@ -548,6 +548,10 @@ class Early_Exit_DNN(nn.Module):
 
     for i, exitBlock in enumerate(self.exits[:int(nr_branch_edge)]):
         x = self.stages[i](x)
+        
+        if (i+1 in config.disabled_branches):
+            continue
+
         output_branch = exitBlock(x)
 
         output_branch =  self.temperature_scale_branches(output_branch, i)

@@ -21,11 +21,11 @@ model = ModelLoad()
 def edgeInference(fileImg, p_tar, nr_branch_edge):
 
 	#This line reads the fileImg, obtaining pixel matrix.
+	start = time.time()
 	image_bytes = fileImg.read()
 	response_request = {"status": "ok"}
 
 	#Starts measuring the inference time
-	start = time.time()
 	tensor_img = transform_image(image_bytes) #transform input data, which means resize the input image
 
 	#Run the Early-exit dnn inference

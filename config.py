@@ -5,7 +5,8 @@ DIR_NAME = os.path.dirname(__file__)
 DEBUG = True
 
 # Edge URL Configuration 
-HOST_EDGE = "146.164.69.144"
+#HOST_EDGE = "146.164.69.144"
+HOST_EDGE = "192.168.0.20"
 PORT_EDGE = 5001
 URL_EDGE = "http://%s:%s"%(HOST_EDGE, PORT_EDGE)
 URL_EDGE_DNN_INFERENCE = "%s/api/edge/edgeInference"%(URL_EDGE)
@@ -13,12 +14,13 @@ urlConfModelEdge = "%s/api/edge/modelConfiguration"%(URL_EDGE)
 
 
 # Cloud URL Configuration 
-HOST_CLOUD = "146.164.69.144"
+#HOST_CLOUD = "146.164.69.144"
+HOST_CLOUD = "192.168.0.20"
 PORT_CLOUD = 3001
 URL_CLOUD = "http://%s:%s"%(HOST_CLOUD, PORT_CLOUD)
 URL_CLOUD_DNN_INFERENCE = "%s/api/cloud/cloudInference"%(URL_CLOUD)
 urlConfModelCloud = "%s/api/cloud/modelConfiguration"%(URL_CLOUD)
-
+urlOnlyCloudProcessing = "%s/api/cloud/onlyCloudProcessing"%(URL_CLOUD)
 
 #Dataset Path
 dataset_path = os.path.join(DIR_NAME, "datasets", "test_dataset_caltech256")
@@ -40,6 +42,8 @@ timeout = 5
 RESULTS_INFERENCE_TIME_EDGE = os.path.join(DIR_NAME, "appEdge", "api", "services", "results")
 temp_edge_path = os.path.join(DIR_NAME, "appEdge", "api", "services", "temperature")
 temp_cloud_path = os.path.join(DIR_NAME, "appCloud", "api", "services", "temperature")
+result_cloud_inference_time = os.path.join(DIR_NAME, "results", "only_cloud_inference_time.csv")
+
 
 # Settings to load B-Mobilenet model
 n_classes = 258                   # number of classes in the dataset
@@ -58,3 +62,4 @@ nr_branch_model = 5
 model_path_edge_final = os.path.join(DIR_NAME, "appEdge", "api", "services", "models", 
 	"mobilenet_%s_2_branches_%s.pth"%(dataset_name, nr_branch_model))
 
+disabled_branches = [1, 2]

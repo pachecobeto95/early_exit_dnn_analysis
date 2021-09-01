@@ -9,6 +9,20 @@ from requests.exceptions import HTTPError, ConnectTimeout
 from glob import glob
 import torch
 
+def saveInferenceTimeCloud(cloud_inference_time):
+	result = {"cloud_inference_time": cloud_inference_time}
+
+	result_path = os.path.join(config.result_cloud_inference_time)
+
+	if (not os.path.exists(result_path)):
+		df = pd.DataFrame()
+	else:
+		df = pd.read_csv(result_path)
+		df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+	
+	df = df.append(pd.Series(result), ignore_index=True)
+	df.to_csv(result_path) 
+
 def sendModelConf(url, nr_branches_model, dataset_name):
 	
 
@@ -23,6 +37,20 @@ def sendModelConf(url, nr_branches_model, dataset_name):
 
 	except ConnectTimeout as timeout_err:
 		print("Timeout error: ", timeout_err)
+
+def sendImageToCloud(img_path, url):
+	files = [('img', (img_path, open(img_path, 'rb'), 'application/octet'))]
+
+	try:
+		r = requests.post(url, files=files, timeout=config.timeout)
+		r.raise_for_status()
+	
+	except HTTPError as http_err:
+		raise SystemExit(http_err)
+
+	except ConnectTimeout as timeout_err:
+		print("Url: ¨%s, Timeout error: %s"%(url, timeout_err))
+
 
 def sendImage(img_path, url, p_tar, nr_branch_edge):
 	data_dict = {"p_tar": p_tar, "nr_branch_edge": nr_branch_edge}
@@ -51,7 +79,12 @@ def inferenceTimeExperiment(imgs_files_list, url_edge, p_tar_list, nr_branch_edg
 			for p_tar in p_tar_list:
 				sendImage(img_path, url_edge, p_tar, float(nr_branch_edge))
 
-				#sys.exit()
+
+		start = time.time()
+		sendImageToCloud(img_path, config.urlOnlyCloudProcessing)
+		end = time.time()
+		cloud_inference_time = end-start
+		saveInferenceTimeCloud(cloud_inference_time)
 
  
 
@@ -68,7 +101,7 @@ def main(args):
 	#for nr_branches_model in nr_branches_model_list:
 
 	#This line defines the number of side branches processed at the cloud
-	nr_branch_edge = np.arange(2, nr_branches_model+1)
+	nr_branch_edge = np.arange(3, nr_branches_model+1)
 	sendModelConf(config.urlConfModelEdge, nr_branches_model, args.dataset_name)
 	sendModelConf(config.urlConfModelCloud, nr_branches_model, args.dataset_name)
 	inferenceTimeExperiment(imgs_files_list, config.URL_EDGE_DNN_INFERENCE, p_tar_list, nr_branch_edge)
