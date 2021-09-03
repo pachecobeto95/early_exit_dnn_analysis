@@ -96,7 +96,7 @@ def main(args):
 
 	imgs_files_list = list(glob(os.path.join(config.dataset_path, "*")))
 
-	p_tar_list = [0.7, 0.8, 0.85, 0.9]
+	p_tar_list = [0.7, 0.75, 0.8, 0.85, 0.9]
 
 	#for nr_branches_model in nr_branches_model_list:
 
